@@ -59,7 +59,7 @@ const data = {
         {
             "id": 2,
             "name": "Taj Mahal, India",
-            "imageUrl": "enter_your_image_for_taj-mahal.jpg",
+            "imageUrl": "https://i.guim.co.uk/img/media/6c36faa8209eb3195c80f7ada81caa4892479b53/0_276_5000_3000/master/5000.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=a3b106a7cedd8e4db46af4c39b779ea6",
             "description": "An iconic symbol of love and a masterpiece of Mughal architecture."
         }
     ],
@@ -113,67 +113,102 @@ async function searchDestinations(event) {
     let isCountrySearch = countries.some(country => country.name.toLowerCase().indexOf(searchString) > -1)
     let isTempleSearch = temples.some(temple => temple.name.toLowerCase().indexOf(searchString) > -1)
     let isBeachSearch = beaches.some(beach => beach.name.toLowerCase().indexOf(searchString) > -1)
+    if ("beaches".indexOf(searchString) > -1) {
+        let beaches = data.beaches.filter(beach => beach)
+        return displayCards(beaches, event)
+    }
+    if ("temples".indexOf(searchString) > -1) {
+        let temples = data.temples.filter(temple => temple)
+        return displayCards(temples, event)
 
+    }
     if (isCountrySearch) {
-        let result = countries.filter(country => country)
+        let result = countries.filter(country => country.name.toLowerCase().indexOf(searchString) > -1)
 
-        result.map(country => displayCards(country)
-
-        )
+        return displayCards(result, event)
     }
     else if (isTempleSearch) {
-        let result = temples.filter(temple => temple)
+        let result = temples.filter(temple => temple.name.toLowerCase().indexOf(searchString) > -1)
 
-        result.map(temple => displayCards(temple)
+        return result.map(temple => displayCards(temple, event)
 
         )
     }
     else if (isBeachSearch) {
-        let beaches = beaches.filter(beach => beach)
-        beaches.map(beach => displayCards(beach)
+        let result = beaches.filter(beach => beach.name.toLowerCase().indexOf(searchString) > -1)
 
-        )
+        return result.map(beach => displayCards(beach, event))
     }
 
 }
 function displayAllCountries(event) {
 
     const { countries } = data;
-    countries.map(country => displayCards(country, event))
+    displayCards(countries, event)
 }
 //display cards
-function displayCards(data, event) {
-    const cardContainer = document.getElementById("app__destination-card-container")
+function displayCards(searchItem, event) {
 
-        cardContainer.innerHTML = ""
-       
-    if(event){
-        event.preventDefault()
-        cardContainer.style.display="flex"
-    }
+    const cardContainer = document.getElementById("app__destination-card-container")
+    cardContainer.style.display = "flex"
+    cardContainer.innerHTML = ""
     const destinationCard = document.createElement("div")
-    cardContainer.addEventListener("mouseleave", (e)=>cardContainer.style.display="none")
+    cardContainer.addEventListener("mouseleave", (e) => cardContainer.style.display = "none")
     destinationCard.classList.add("app__destination-card")
     const imageContainer = document.createElement("div")
     imageContainer.classList.add("app__destination-card--image")
     const cardImage = document.createElement("img")
-    const visit= document.createElement("a")
+    const visit = document.createElement("a")
+
     visit.setAttribute("target", "_blank")
     visit.setAttribute("rel", "noopener noreferrer")
-    visit.setAttribute("href", `${data.imageUrl ? data.imageUrl : data.cities[0].imageUrl}`)
     visit.classList.add("btn-primary")
-    visit.innerText="Visit"
-    cardImage.setAttribute("alt", data.name)
-    cardImage.setAttribute("src", data.imageUrl ? data.imageUrl : data.cities[0].imageUrl)
     const cardTitle = document.createElement("h2")
-    cardTitle.innerText = data.name
     const cardDescription = document.createElement("p")
-    cardDescription.innerText = data.description ? data.description : data.cities[0].description;
-    cardContainer.appendChild(destinationCard)
-    destinationCard.appendChild(imageContainer)
-    imageContainer.appendChild(cardImage)
-    destinationCard.appendChild(cardTitle)
-    destinationCard.appendChild(cardDescription)
-    destinationCard.appendChild(visit)
-    return destinationCard;
+
+    if (searchItem?.length >= 1) {
+        searchItem?.map((item) => {
+            let newVisit = visit.cloneNode(true)
+            let newCardImage = cardImage.cloneNode(true)
+            let newImageContainer = imageContainer.cloneNode(true)
+            let newDestinationCard = destinationCard.cloneNode(true)
+            let newCardTitle = cardTitle.cloneNode(true)
+            let newCardDescription = cardDescription.cloneNode(true)
+            cardContainer.appendChild(newDestinationCard)
+            newDestinationCard.appendChild(newImageContainer)
+            newImageContainer.appendChild(newCardImage)
+            newDestinationCard.appendChild(newCardTitle)
+            newDestinationCard.appendChild(newCardDescription)
+            newDestinationCard.appendChild(newVisit)
+
+            newCardTitle.textContent = item.name
+            newCardDescription.textContent = item.description
+            newCardImage.src = item.imageUrl ? item.imageUrl : item.cities[0].imageUrl
+            newVisit.href = item.imageUrl ? item.websiteUrl : item.cities[0].imageUrl
+            newVisit.textContent = "Visit"
+        })
+    }
+
+    else {
+        let newVisit = visit.cloneNode(true)
+        let newCardImage = cardImage.cloneNode(true)
+        let newImageContainer = imageContainer.cloneNode(true)
+        let newDestinationCard = destinationCard.cloneNode(true)
+        let newCardTitle = cardTitle.cloneNode(true)
+        let newCardDescription = cardDescription.cloneNode(true)
+        cardContainer.appendChild(newDestinationCard)
+        newDestinationCard.appendChild(newImageContainer)
+        newImageContainer.appendChild(newCardImage)
+        newDestinationCard.appendChild(newCardTitle)
+        newDestinationCard.appendChild(newCardDescription)
+        newDestinationCard.appendChild(newVisit)
+
+        newCardTitle.textContent = searchItem.name
+        newCardDescription.textContent = searchItem.description
+        newCardImage.src = searchItem.imageUrl ? searchItem.imageUrl : searchItem.cities[0].imageUrl
+        newVisit.href = searchItem.imageUrl ? searchItem.websiteUrl : searchItem.cities[0].imageUrl
+        newVisit.textContent = "Visit"
+    }
+
+    return ;
 }
