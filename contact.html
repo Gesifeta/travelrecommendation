@@ -24,30 +24,17 @@
         </div>
         <nav class="nab-bar">
             <ul>
-                <li class="active" ><a onclick="selectNavLink(event)" href="index.html">Home</a> </li>
-                <li ><a onclick="selectNavLink(event)" href="about.html" >About us</a></li>
-                <li ><a onclick="selectNavLink(event)" href="contact.html">Contact Us</a></li>
+                <li onclick="selectNavLink(event)"><a href="index.html">Home</a> </li>
+                <li onclick="selectNavLink(event)"><a href="about.html" >About us</a></li>
+                <li class="active"  onclick="selectNavLink(event)"><a href="contact.html">Contact Us</a></li>
             </ul>
         </nav>
-        <div class="app__search-bar" id="searchBar">
-            <input type="search" name="search" onkeyup="searchDestinations(event)" onclick="displayAllCountries(event)" id="search" placeholder="Enter a destination or keyword">
-            <img src="/assets//search.svg" style="color: lightseagreen;" alt="">
-            <div class="btn-group">
-                <button>Search</button>
-                <button>Clear</button>
-            </div>
-
-        </div>
+  
     </header>
-    <div id="app__destination-card-container"></div>
     <div class="app">
-        <main class="app__home hero" id="home-hero">
+         
+        <section class="app__contact-us" id="contact-us">
             <div class="app__social-container hero">
-                <div class="app__social-line">
-                    <div class="app__social-line">
-
-                    </div>
-                </div>
                 <div class="app__nav-link--socials">
                     <a href="https://www.twitter.com">
                         <img src="/assets/twitter.png" alt="x icon">
@@ -63,16 +50,32 @@
                     </a>
                 </div>
             </div>
-            <div class="app__home-hero about">
-                <div>
-                    <h1>EXPLORE DREAM DESTINATIONS</h1>
-                    <p>It encourages exploration of unfamiliar territories, embracing diverse cultures and landscapes,
-                        while
-                        pursuing the desired destinations that captivates the heart and ignites a sense of wonder.</p>
+            <div class="contact">
+                <div class="app__contact-us--text">
+                    <h1>CONTACT US</h1>
+                    <P>Get in touch.</P>
                 </div>
-                <button class="btn-primary">BOOK NOW</button>
+                <form action="" onsubmit="" class="app__contact-form">
+                    <div class="form-control">
+                        <label for="name">name</label>
+                        <input type="text" name="name" id="name">
+                    </div>
+                    <div class="form-control">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                    <div class="form-control">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" cols="15" rows="5"></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn-primary">Submit</button>
+                        <button type="reset" class="btn-secondary">Cancel</button>
+                    </div>
+                </form>
             </div>
-        </main>
+    </div>
+    </section>
     </div>
     <script src="index.js"></script>
     <noscript>Sorry, You need to enable javascript on your browser to view this page.</noscript>
