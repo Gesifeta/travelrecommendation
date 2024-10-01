@@ -1,4 +1,4 @@
-@import url(/styles/global.css);
+@import url(./global.css);
 
 /* CSS FOR HEADER SECTION */
 .app {
@@ -105,6 +105,10 @@ li.active {
     flex-direction: column;
 
 }
+.app__destination-card img{
+    max-width: 100%;
+    max-height: 70%;
+}
 
 
 .app__social-line {
@@ -157,11 +161,17 @@ li.active {
 /* CSS FOR ABOUT US SECTION */
 .app__about-us {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 3rem;
     justify-content: center;
+    align-items: center;
     min-height: 100vh;
     width: 7;
 }
+.app__social-container img{
+    max-width: 3rem;
+}
+
 
 .app__corporate-info {
     display: flex;
@@ -251,7 +261,6 @@ li.active {
     .app__corporate-info {
         flex-direction: column;
     }
-
     .app__profile-container {
         flex-direction: column;
     }
@@ -298,10 +307,7 @@ li.active {
     justify-content: left;
     background-color: #b7d1c9;
 }
-img{
-    max-width: 100%;
-    max-height: 10%;
-}
+
 a.btn-primary{
     background-color: coral;
     align-self: flex-start;
